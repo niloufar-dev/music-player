@@ -1,0 +1,304 @@
+@import "tailwindcss";
+@source "./script.js";
+
+@layer utilities{
+    .choice{
+        @apply bg-gradient-to-r from-[#FF5C00] to-[#ff8a3d] text-white shadow-[0_6px_22px_-6px_rgba(255,92,0,0.7)]
+    }
+}
+
+@keyframes eq1 { 0%,100% { height: 40%; } 50% { height: 100%; } }
+@keyframes eq2 { 0%,100% { height: 70%; } 50% { height: 30%; } }
+@keyframes eq3 { 0%,100% { height: 50%; } 50% { height: 90%; } }
+
+.eq-bar-1 { animation: eq1 0.6s ease-in-out infinite; }
+.eq-bar-2 { animation: eq2 0.5s ease-in-out infinite 0.1s; }
+.eq-bar-3 { animation: eq3 0.7s ease-in-out infinite 0.15s; }
+
+/* ==================================================================
+   ARTISTS & ARTIST PAGES — pure-CSS view switching (no JS required)
+   ================================================================== */
+
+/* Hide <main> while an artist page is open via URL hash (#artist-*) */
+main:has(~ .artist-page:target) { display: none; }
+
+.artist-page { display: none; }
+.artist-page:target { display: block; animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes page-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ---------------- Keyframes ---------------- */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes pop {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+@keyframes glow-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(22px, -16px) scale(1.06); }
+}
+
+.animate-fade-up     { animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in     { animation: fade-in 0.45s ease both; }
+.animate-pop         { animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-glow-drift  { animation: glow-drift 9s ease-in-out infinite; }
+
+/* ---------------- Staggered grid entrance ---------------- */
+.stagger > * {
+    opacity: 0;
+    animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(6) { animation-delay: 0.30s; }
+.stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger > *:nth-child(8) { animation-delay: 0.40s; }
+
+/* ---------------- Album / artist art gradients ---------------- */
+.art-orange  { background: linear-gradient(145deg, #FF5C00 0%, #c2410c 100%); }
+.art-amber   { background: linear-gradient(145deg, #f59e0b 0%, #92400e 100%); }
+.art-red     { background: linear-gradient(145deg, #ef4444 0%, #7f1d1d 100%); }
+.art-teal    { background: linear-gradient(145deg, #14b8a6 0%, #0f766e 100%); }
+.art-sky     { background: linear-gradient(145deg, #0ea5e9 0%, #1e40af 100%); }
+.art-emerald { background: linear-gradient(145deg, #10b981 0%, #065f46 100%); }
+.art-slate   { background: linear-gradient(160deg, #475569 0%, #0f172a 60%, #1c1917 100%); }
+
+/* ---------------- Artist cards ---------------- */
+.artist-card {
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease,
+        border-color 0.45s ease;
+    will-change: transform;
+}
+.artist-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 92, 0, 0.4);
+    box-shadow:
+        0 24px 60px -20px rgba(0, 0, 0, 0.8),
+        0 0 40px -12px rgba(255, 92, 0, 0.35);
+}
+.artist-card .art-grad { transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+.artist-card:hover .art-grad { transform: scale(1.12); }
+
+.artist-card .artist-play {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.artist-card:hover .artist-play {
+    opacity: 1;
+    transform: scale(1);
+}
+.artist-card .artist-play-ring {
+    transition:
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.55s ease;
+}
+.artist-card:hover .artist-play-ring {
+    transform: scale(1.45);
+    opacity: 0;
+}
+.artist-card .artist-name { transition: color 0.3s ease; }
+.artist-card:hover .artist-name { color: #ff6a1f; }
+
+/* ---------------- Song rows ---------------- */
+.row { cursor: pointer; transition: background 0.3s ease; }
+.row:hover { background: rgba(255, 255, 255, 0.045); }
+
+.row .row-num { transition: opacity 0.25s ease; }
+.row:hover .row-num { opacity: 0; }
+
+.row .art-grad { transition: transform 0.6s ease; }
+.row:hover .art-grad { transform: scale(1.12); }
+
+.fav-btn { transition: color 0.3s ease; }
+
+@layer utilities{
+    .fav-btn-active {
+        @apply text-[#ff5c00] bg-[#ff5e0028]
+     }
+}
+
+/* Now playing state */
+.row-active { background: rgba(255, 92, 0, 0.07); }
+.row-active:hover { background: rgba(255, 92, 0, 0.10); }
+.row-active .row-title { color: #ff6a1f; }
+.row-active .row-num { opacity: 0; }
+.row-active .row-eq { display: flex; }
+
+/* Staggered song-list appearance */
+.song-list .row {
+    opacity: 0;
+    animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.song-list .row:nth-child(1) { animation-delay: 0.06s; }
+.song-list .row:nth-child(2) { animation-delay: 0.12s; }
+.song-list .row:nth-child(3) { animation-delay: 0.18s; }
+.song-list .row:nth-child(4) { animation-delay: 0.24s; }
+.song-list .row:nth-child(5) { animation-delay: 0.30s; }
+.song-list .row:nth-child(6) { animation-delay: 0.36s; }
+.song-list .row:nth-child(7) { animation-delay: 0.42s; }
+.song-list .row:nth-child(8) { animation-delay: 0.48s; }
+
+/* ---------------- Scrollbar ---------------- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a2c; border-radius: 9999px; border: 2px solid #09090b; }
+::-webkit-scrollbar-thumb:hover { background: #FF5C00; }
+
+/* ==================================================================
+   FAVORITES PAGE — pure-CSS view switching (no JS required)
+   ================================================================== */
+
+/* Hide <main> while the Favorites page is open via URL hash (#favoritesPage) */
+main:has(~ .favorites-page:target) { display: none; }
+
+.favorites-page { display: none; }
+.favorites-page:target { display: block; animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Mobile navigation: Favorites becomes active when the page is open */
+body:has(.favorites-page:target) .mobile-nav-fav {
+    color: #ffffff;
+    background: #FF5C00;
+}
+
+/* ==================================================================
+   HOME REDESIGN — waveform visualizer & rotating quote card
+   ================================================================== */
+
+/* ---------------- Animated waveform ---------------- */
+.wave-bar {
+    transform-origin: center;
+    animation: wave 1.2s ease-in-out infinite;
+}
+.wave-bar:nth-child(1)  { animation-delay: 0.00s; }
+.wave-bar:nth-child(2)  { animation-delay: 0.20s; }
+.wave-bar:nth-child(3)  { animation-delay: 0.12s; animation-duration: 1.00s; }
+.wave-bar:nth-child(4)  { animation-delay: 0.32s; }
+.wave-bar:nth-child(5)  { animation-delay: 0.05s; animation-duration: 1.30s; }
+.wave-bar:nth-child(6)  { animation-delay: 0.25s; }
+.wave-bar:nth-child(7)  { animation-delay: 0.15s; animation-duration: 0.95s; }
+.wave-bar:nth-child(8)  { animation-delay: 0.37s; }
+.wave-bar:nth-child(9)  { animation-delay: 0.08s; animation-duration: 1.15s; }
+.wave-bar:nth-child(10) { animation-delay: 0.30s; }
+.wave-bar:nth-child(11) { animation-delay: 0.18s; animation-duration: 1.05s; }
+.wave-bar:nth-child(12) { animation-delay: 0.42s; }
+.wave-bar:nth-child(13) { animation-delay: 0.03s; animation-duration: 1.25s; }
+.wave-bar:nth-child(14) { animation-delay: 0.28s; }
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(0.3); }
+    50%      { transform: scaleY(1); }
+}
+
+/* ---------------- Rotating quote card ---------------- */
+.quote-rotator { position: relative; min-height: 130px; }
+
+.quote-slide {
+    position: absolute;
+    inset: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: quote-cycle 15s ease-in-out infinite;
+    will-change: opacity, transform;
+}
+.quote-slide:nth-child(2) { animation-delay: 5s; }
+.quote-slide:nth-child(3) { animation-delay: 10s; }
+
+@keyframes quote-cycle {
+    0%          { opacity: 0; transform: translateY(14px); }
+    3%, 30%     { opacity: 1; transform: none; }
+    34%, 100%   { opacity: 0; transform: translateY(-14px); }
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+}
+
+.swiper-slide {
+    height: auto;
+    text-align: left;
+}
+
+/* NOIR pagination */
+.swiper-pagination {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    text-align: center;
+}
+
+.swiper-pagination-bullet {
+    width: 18px;
+    height: 4px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.25);
+    opacity: 1;
+    transition: width 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    width: 28px;
+    background: #FF5C00;
+    box-shadow: 0 0 12px rgba(255, 92, 0, 0.7);
+}
+
+/* ==================================================================
+   MOBILE RESPONSIVE — Favorites list + overflow safety
+   ================================================================== */
+body { overflow-x: clip; }
+
+@media (max-width: 767px) {
+
+    /* Show the favorite button on every playlist / artist / favorites row */
+    .fav-btn {
+        display: inline-flex !important;
+        height: 40px;
+        width: 40px;
+    }
+
+    /* Compact rows so the favorite button fits without overflow */
+    #playlist .row,
+    .song-list .row {
+        gap: 0.625rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    #playlist .row img,
+    .song-list .row img {
+        height: 48px;
+        width: 48px;
+        border-radius: 12px;
+    }
+
+    #playlist .row .du,
+    .song-list .row .du {
+        display: none;
+    }
+
+}
+
+

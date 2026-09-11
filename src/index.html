@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+
+
+    <link rel="stylesheet" href="./output.css">
+
+    <title>NOIR — Music Player</title>
+</head>
+
+<body class="min-h-screen bg-[#09090b] font-['Manrope'] text-white">
+
+    <!-- ================= APP ================= -->
+    <main class="mx-auto min-h-screen max-w-[1600px] px-5 pt-5 pb-60 sm:px-8 md:pb-40 lg:px-10">
+
+        <!-- ================= HEADER ================= -->
+        <header class="flex items-center justify-between">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-full bg-[#FF5C00] text-white">
+                    <svg
+                        class="h-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+                        <path d="M9 18V5l10-2v13"/>
+                        <circle cx="6" cy="18" r="3"/>
+                        <circle cx="16" cy="16" r="3"/>
+                    </svg>
+                </div>
+
+                <span class="text-xl font-extrabold tracking-tight">
+                    NOIR
+                </span>
+            </div>
+
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden items-center gap-7 md:flex">
+
+                <button
+                    id="homeBtn"
+                    class="group relative flex items-center gap-2 text-sm font-bold text-white transition hover:text-[#FF5C00]"
+                >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg>
+                    Home
+                    <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.9)]"></span>
+                </button>
+
+                
+
+                <a
+                    href="#favoritesPage"
+                    id="favoritesBtn"
+                    class="flex items-center gap-2 text-sm font-semibold text-white/40 transition hover:text-[#FF5C00]"
+                >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                    Favorites
+                </a>
+
+                
+
+            </nav>
+
+
+            <!-- Mobile Navigation -->
+            <nav class="flex items-center gap-2 md:hidden">
+
+                <a
+                    href="#"
+                    class="flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-4 py-2 text-xs font-bold text-white/70 transition duration-300 active:scale-95 hover:border-[#FF5C00]/40 hover:text-[#FF5C00]"
+                >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+                    Home
+                </a>
+
+                <a
+                    href="#favoritesPage"
+                    class="mobile-nav-fav flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-4 py-2 text-xs font-bold text-white/70 transition duration-300 active:scale-95 hover:border-[#FF5C00]/40 hover:text-[#FF5C00]"
+                >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                    Favorites
+                </a>
+
+            </nav>
+
+
+            <!-- Search -->
+            <div class="group relative hidden lg:block">
+
+                <div
+                    class="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.06] px-5 py-3 shadow-md shadow-black/20 backdrop-blur-xl transition-all duration-300 group-hover:border-white/15 group-focus-within:border-[#FF5C00]/50 group-focus-within:bg-white/[0.08] group-focus-within:shadow-[0_0_28px_-10px_rgba(255,92,0,0.5)]"
+                >
+
+                    <svg
+                        class="h-5 w-5 text-white/40 transition-colors duration-300 group-focus-within:text-[#FF5C00]"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-4-4"/>
+                    </svg>
+
+                    <input
+                        id=""
+                        type="text"
+                        placeholder="Search music..."
+                        class="searchInput w-48 bg-transparent text-sm font-semibold outline-none placeholder:text-white/35"
+                    >
+
+                    <kbd class="hidden rounded-md border border-white/10 bg-white/[0.05] px-1.5 py-0.5 text-[10px] font-bold leading-none text-white/30 xl:block">
+                        ⌘K
+                    </kbd>
+
+                </div>
+
+                <!-- Search results dropdown -->
+                <div
+                    class="pointer-events-none absolute left-0 right-0 top-full z-30 mt-2 origin-top -translate-y-1.5 scale-[0.97] opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:opacity-100"
+                >
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/60 backdrop-blur-2xl">
+
+                        <div class="p-2 dropsearch2">
+
+                            <div class="flex items-center gap-2 px-3 py-2.5">
+                                <span class="h-1 w-1 rounded-full bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.9)]"></span>
+                                <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-white/40">
+                                    Top results
+                                </p>
+                            </div>
+
+                            <div data-song-id="1" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                    <img src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp" alt="" class="h-full w-full object-cover">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Behet Ghol Midam</h4>
+                                    <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Mohsen Yeganeh</p>
+                                </div>
+                                <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/30 transition-colors duration-300 group-hover/row:border-[#FF5C00]/40 group-hover/row:text-[#FF5C00] sm:block">Pop</span>
+                                <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                    <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
+                            </div>
+
+                            <div  data-song-id="5" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                    <img src="./image/s.jpg" alt="" class="h-full w-full object-cover">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Adat</h4>
+                                    <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Shadmehr Aghili</p>
+                                </div>
+                                <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/30 transition-colors duration-300 group-hover/row:border-[#FF5C00]/40 group-hover/row:text-[#FF5C00] sm:block">Pop</span>
+                                <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                    <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
+                            </div>
+
+                            <div data-song-id="3" class=" group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                    <img src="./image/en.jpg" alt="" class="h-full w-full object-cover">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Hamgonah</h4>
+                                    <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Alireza Ghorbani</p>
+                                </div>
+                                <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/30 transition-colors duration-300 group-hover/row:border-[#FF5C00]/40 group-hover/row:text-[#FF5C00] sm:block">Sonati</span>
+                                <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                    <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
+                            </div>
+
+                            <div data-song-id="4" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                                <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                    <img src="./image/h.jpg" alt="" class="h-full w-full object-cover">
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Chera Rafti</h4>
+                                    <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Homayoun Shajarian</p>
+                                </div>
+                                <span class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white/30 transition-colors duration-300 group-hover/row:border-[#FF5C00]/40 group-hover/row:text-[#FF5C00] sm:block">Sonati</span>
+                                <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                    <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="border-t border-white/[0.06] p-2 contain hidden">
+                            <button class="flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-bold text-white/40 transition-colors duration-300 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00] allresult">
+                                View all results
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= MOBILE SEARCH ================= -->
+        <div class="group relative mt-5 lg:hidden">
+
+            <div
+                class="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.06] px-5 py-3 shadow-md shadow-black/20 backdrop-blur-xl transition-all duration-300 group-focus-within:border-[#FF5C00]/50 group-focus-within:bg-white/[0.08] group-focus-within:shadow-[0_0_28px_-10px_rgba(255,92,0,0.5)]"
+            >
+
+                <svg
+                    class="h-5 w-5 shrink-0 text-white/40 transition-colors duration-300 group-focus-within:text-[#FF5C00]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="m20 20-4-4"/>
+                </svg>
+
+                <input
+                    type="text"
+                    placeholder="Search music..."
+                    class="searchInput w-full bg-transparent text-sm font-semibold outline-none placeholder:text-white/35"
+                >
+
+            </div>
+
+            <!-- Mobile search results dropdown -->
+            <div
+                class="pointer-events-none absolute left-0 right-0 top-full z-30 mt-2 origin-top -translate-y-1.5 scale-[0.97] opacity-0 transition-all duration-300 ease-out group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:opacity-100"
+            >
+                <div class="overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/95 shadow-2xl shadow-black/60 backdrop-blur-2xl">
+
+                    <div class="p-2 dropsearch">
+
+                        <div class="flex items-center gap-2 px-3 py-2.5">
+                            <span class="h-1 w-1 rounded-full bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.9)]"></span>
+                            <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-white/40">
+                                Top results
+                            </p>
+                        </div>
+
+                        <div data-song-id="1" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                <img src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp" alt="" class="h-full w-full object-cover">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Behet Ghol Midam</h4>
+                                <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Mohsen Yeganeh</p>
+                            </div>
+                            <button class=" play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </button>
+                        </div>
+
+                        <div data-song-id="5" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                <img src="./image/s.jpg" alt="" class="h-full w-full object-cover">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Adat</h4>
+                                <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Shadmehr Aghili</p>
+                            </div>
+                            <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </button>
+                        </div>
+
+                        <div data-song-id="3" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                <img src="./image/en.jpg" alt="" class="h-full w-full object-cover">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Hamgonah</h4>
+                                <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Alireza Ghorbani</p>
+                            </div>
+                            <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </button>
+                        </div>
+
+                        <div data-song-id="4" class="group/row flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-white/[0.05]">
+                            <div class="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg shadow-md shadow-black/40">
+                                <img src="./image/h.jpg" alt="" class="h-full w-full object-cover">
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <h4 class="truncate text-sm font-bold text-white/90 transition-colors duration-300 group-hover/row:text-white">Chera Rafti</h4>
+                                <p class="mt-0.5 truncate text-xs font-semibold text-white/40">Homayoun Shajarian</p>
+                            </div>
+                            <button class="play-track-btn flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.07] text-white/60 transition-all duration-300 hover:bg-[#FF5C00] hover:text-white hover:shadow-[0_0_16px_-2px_rgba(255,92,0,0.6)]">
+                                <svg class="h-3.5 w-3.5 translate-x-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="border-t border-white/[0.06] p-2 contain hidden">
+                        <button class="flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-bold text-white/40 transition-colors duration-300 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00] allresult">
+                            View all results
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= HERO ================= -->
+        <section class="mt-10 grid gap-4 lg:grid-cols-[1.6fr_1fr] ">
+
+            
+            <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide h-auto">
+
+            <div
+                class="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#1b1b1e] via-[#141415] to-[#101012] p-5 text-white shadow-[0_30px_90px_-30px_rgba(255,92,0,0.35)] sm:p-7 lg:p-8 border border-white/[0.08]"
+            >
+
+                <!-- Singer photo background -->
+                <img
+                    src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp"
+                    alt=""
+                    class="absolute inset-0 h-full w-full object-cover object-center opacity-30 blur-[1px]"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0d]/95 via-[#101012]/85 to-[#0b0b0d]/70"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(255,92,0,0.12),transparent_55%)]"></div>
+
+                <!-- Background glow -->
+                <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#FF5C00]/15 blur-[90px]"></div>
+
+                <!-- Animated waveform visualizer -->
+                <div class="pointer-events-none absolute inset-y-0 right-3 hidden items-center justify-center gap-[3px] opacity-70 sm:flex sm:right-6">
+
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-14 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-24 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-10 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-32 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-16 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-40 w-[3px] rounded-full bg-[#FF5C00]/80"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-12 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-36 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+
+                </div>
+
+                <div class="relative flex h-full flex-col">
+
+                    <!-- Top -->
+                    <div class="flex items-center justify-between gap-3">
+
+                        <span class="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-white/50">
+                            <span class="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.9)]"></span>
+                            FEATURED TRACK
+                        </span>
+
+                        <div class="flex items-center gap-2.5">
+
+                            <span class="hidden rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white/40 sm:block">
+                                1 / 4
+                            </span>
+
+                            <button
+                                id="featuredFavoriteBtn"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition duration-300 hover:border-[#FF5C00]/40 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00]"
+                            >
+                                <svg
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/>
+                                </svg>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Content -->
+                    <div class="mt-5 grid flex-1 items-center gap-6 sm:mt-7 sm:grid-cols-[minmax(0,190px)_1fr] sm:gap-10">
+
+                        <!-- Cover -->
+                        <div class="relative mx-auto w-32 sm:w-full">
+
+                            <div class="absolute -inset-6 rounded-full bg-[#FF5C00]/20 blur-[60px]"></div>
+
+                            <div class="relative aspect-square overflow-hidden rounded-[1.6rem] shadow-[0_0_50px_-12px_rgba(255,92,0,0.45),0_30px_70px_-18px_rgba(0,0,0,0.9)] ring-1 ring-[#FF5C00]/30">
+
+                                <img
+                                    id="featuredCover"
+                                    src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp"
+                                    alt="Featured music"
+                                    class="h-full w-full object-cover grayscale contrast-105"
+                                >
+
+                                <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,92,0,0)_55%,rgba(255,92,0,0.28)_100%)]"></div>
+
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Info -->
+                        <div class="min-w-0 pb-5 sm:pb-0">
+
+                            <div class="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
+
+                                <span class="rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF5C00]">
+                                    Pop
+                                </span>
+
+
+                            </div>
+
+
+                            <h1
+                                class="mt-3 max-w-xl text-center text-2xl font-extrabold leading-[1.12] tracking-tight sm:text-left sm:text-3xl lg:text-4xl lg:leading-[1.05]"
+                            >
+                                Behet
+                                <br class="hidden sm:block">
+                                Ghol Midam
+                            </h1>
+
+
+                            <p class="mt-2 text-center text-sm font-extrabold text-[#FF5C00] sm:text-left sm:text-base lg:text-lg">
+                                Mohsen Yegane
+                            </p>
+
+
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="swiper-slide h-auto">
+            <div
+                class="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#1b1b1e] via-[#141415] to-[#101012] p-5 text-white shadow-[0_30px_90px_-30px_rgba(255,92,0,0.35)] sm:p-7 lg:p-8 border border-white/[0.08]"
+            >
+
+                <!-- Singer photo background -->
+                <img
+                    src="./image/mo1.jpg"
+                    alt=""
+                    class="absolute inset-0 h-full w-full object-cover object-center opacity-30 blur-[1px]"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0d]/95 via-[#101012]/85 to-[#0b0b0d]/70"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(255,92,0,0.12),transparent_55%)]"></div>
+
+                <!-- Background glow -->
+                <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#FF5C00]/15 blur-[90px]"></div>
+
+                <!-- Animated waveform visualizer -->
+                <div class="pointer-events-none absolute inset-y-0 right-3 hidden items-center justify-center gap-[3px] opacity-70 sm:flex sm:right-6">
+
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-14 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-24 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-10 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-32 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-16 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-40 w-[3px] rounded-full bg-[#FF5C00]/80"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-12 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-36 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+
+                </div>
+
+                <div class="relative flex h-full flex-col">
+
+                    <!-- Top -->
+                    <div class="flex items-center justify-between gap-3">
+
+                        <span class="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-white/50">
+                            <span class="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.9)]"></span>
+                            FEATURED TRACK
+                        </span>
+
+                        <div class="flex items-center gap-2.5">
+
+                            <span class="hidden rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white/40 sm:block">
+                                2 / 4
+                            </span>
+
+                            <button
+                                id="featuredFavoriteBtn"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition duration-300 hover:border-[#FF5C00]/40 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00]"
+                            >
+                                <svg
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/>
+                                </svg>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Content -->
+                    <div class="mt-5 grid flex-1 items-center gap-6 sm:mt-7 sm:grid-cols-[minmax(0,190px)_1fr] sm:gap-10">
+
+                        <!-- Cover -->
+                        <div class="relative mx-auto w-32 sm:w-full">
+
+                            <div class="absolute -inset-6 rounded-full bg-[#FF5C00]/20 blur-[60px]"></div>
+
+                            <div class="relative aspect-square overflow-hidden rounded-[1.6rem] shadow-[0_0_50px_-12px_rgba(255,92,0,0.45),0_30px_70px_-18px_rgba(0,0,0,0.9)] ring-1 ring-[#FF5C00]/30">
+
+                                <img
+                                    id="featuredCover"
+                                    src="./image/mo1.jpg"
+                                    alt="Featured music"
+                                    class="h-full w-full object-cover grayscale contrast-105"
+                                >
+
+                                <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,92,0,0)_55%,rgba(255,92,0,0.28)_100%)]"></div>
+
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Info -->
+                        <div class="min-w-0 pb-5 sm:pb-0">
+
+                            <div class="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
+
+                                <span class="rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF5C00]">
+                                    Classic Pop
+                                </span>
+
+
+                            </div>
+
+
+                            <h1
+                                class="mt-3 max-w-xl text-center text-2xl font-extrabold leading-[1.12] tracking-tight sm:text-left sm:text-3xl lg:text-4xl lg:leading-[1.05]"
+                            >
+                                
+                                Hamdam
+                                
+                            </h1>
+
+
+                            <p class="mt-2 text-center text-sm font-extrabold text-[#FF5C00] sm:text-left sm:text-base lg:text-lg">
+                                Moein
+                            </p>
+
+
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="swiper-slide h-auto">
+            <div
+                class="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#1b1b1e] via-[#141415] to-[#101012] p-5 text-white shadow-[0_30px_90px_-30px_rgba(255,92,0,0.35)] sm:p-7 lg:p-8 border border-white/[0.08]"
+            >
+
+                <!-- Singer photo background -->
+                <img
+                    src="./image/s.jpg"
+                    alt=""
+                    class="absolute inset-0 h-full w-full object-cover object-center opacity-30 blur-[1px]"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0d]/95 via-[#101012]/85 to-[#0b0b0d]/70"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(255,92,0,0.12),transparent_55%)]"></div>
+
+                <!-- Background glow -->
+                <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#FF5C00]/15 blur-[90px]"></div>
+
+                <!-- Animated waveform visualizer -->
+                <div class="pointer-events-none absolute inset-y-0 right-3 hidden items-center justify-center gap-[3px] opacity-70 sm:flex sm:right-6">
+
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-14 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-24 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-10 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-32 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-16 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-40 w-[3px] rounded-full bg-[#FF5C00]/80"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-12 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-36 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+
+                </div>
+
+                <div class="relative flex h-full flex-col">
+
+                    <!-- Top -->
+                    <div class="flex items-center justify-between gap-3">
+
+                        <span class="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-white/50">
+                            <span class="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.9)]"></span>
+                            FEATURED TRACK
+                        </span>
+
+                        <div class="flex items-center gap-2.5">
+
+                            <span class="hidden rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white/40 sm:block">
+                                3 / 4
+                            </span>
+
+                            <button
+                                id="featuredFavoriteBtn"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition duration-300 hover:border-[#FF5C00]/40 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00]"
+                            >
+                                <svg
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/>
+                                </svg>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Content -->
+                    <div class="mt-5 grid flex-1 items-center gap-6 sm:mt-7 sm:grid-cols-[minmax(0,190px)_1fr] sm:gap-10">
+
+                        <!-- Cover -->
+                        <div class="relative mx-auto w-32 sm:w-full">
+
+                            <div class="absolute -inset-6 rounded-full bg-[#FF5C00]/20 blur-[60px]"></div>
+
+                            <div class="relative aspect-square overflow-hidden rounded-[1.6rem] shadow-[0_0_50px_-12px_rgba(255,92,0,0.45),0_30px_70px_-18px_rgba(0,0,0,0.9)] ring-1 ring-[#FF5C00]/30">
+
+                                <img
+                                    id="featuredCover"
+                                    src="./image/s.jpg"
+                                    alt="Featured music"
+                                    class="h-full w-full object-cover grayscale contrast-105"
+                                >
+
+                                <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,92,0,0)_55%,rgba(255,92,0,0.28)_100%)]"></div>
+
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Info -->
+                        <div class="min-w-0 pb-5 sm:pb-0">
+
+                            <div class="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
+
+                                <span class="rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF5C00]">
+                                    Pop
+                                </span>
+
+
+                            </div>
+
+
+                            <h1
+                                class="mt-3 max-w-xl text-center text-2xl font-extrabold leading-[1.12] tracking-tight sm:text-left sm:text-3xl lg:text-4xl lg:leading-[1.05]"
+                            >
+                                Taghdir
+                            </h1>
+
+
+                            <p class="mt-2 text-center text-sm font-extrabold text-[#FF5C00] sm:text-left sm:text-base lg:text-lg">
+                                Shadmehr Aghili
+                            </p>
+
+
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="swiper-slide h-auto">
+            <div
+                class="relative h-full min-h-[300px] w-full overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#1b1b1e] via-[#141415] to-[#101012] p-5 text-white shadow-[0_30px_90px_-30px_rgba(255,92,0,0.35)] sm:p-7 lg:p-8 border border-white/[0.08]"
+            >
+
+                <!-- Singer photo background -->
+                <img
+                    src="./image/en.jpg"
+                    alt=""
+                    class="absolute inset-0 h-full w-full object-cover object-center opacity-30 blur-[1px]"
+                >
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0d]/95 via-[#101012]/85 to-[#0b0b0d]/70"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(255,92,0,0.12),transparent_55%)]"></div>
+
+                <!-- Background glow -->
+                <div class="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-[#FF5C00]/15 blur-[90px]"></div>
+
+                <!-- Animated waveform visualizer -->
+                <div class="pointer-events-none absolute inset-y-0 right-3 hidden items-center justify-center gap-[3px] opacity-70 sm:flex sm:right-6">
+
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-14 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-24 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-10 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-32 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-16 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-40 w-[3px] rounded-full bg-[#FF5C00]/80"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+                    <span class="wave-bar h-12 w-[3px] rounded-full bg-[#FF5C00]/50"></span>
+                    <span class="wave-bar h-36 w-[3px] rounded-full bg-[#FF5C00]/70"></span>
+                    <span class="wave-bar h-8 w-[3px] rounded-full bg-[#FF5C00]/40"></span>
+                    <span class="wave-bar h-20 w-[3px] rounded-full bg-[#FF5C00]/55"></span>
+                    <span class="wave-bar h-28 w-[3px] rounded-full bg-[#FF5C00]/60"></span>
+
+                </div>
+
+                <div class="relative flex h-full flex-col">
+
+                    <!-- Top -->
+                    <div class="flex items-center justify-between gap-3">
+
+                        <span class="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-white/50">
+                            <span class="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.9)]"></span>
+                            FEATURED TRACK
+                        </span>
+
+                        <div class="flex items-center gap-2.5">
+
+                            <span class="hidden rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold tracking-wide text-white/40 sm:block">
+                                4 / 4
+                            </span>
+
+                            <button
+                                id="featuredFavoriteBtn"
+                                class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition duration-300 hover:border-[#FF5C00]/40 hover:bg-[#FF5C00]/10 hover:text-[#FF5C00]"
+                            >
+                                <svg
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/>
+                                </svg>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Content -->
+                    <div class="mt-5 grid flex-1 items-center gap-6 sm:mt-7 sm:grid-cols-[minmax(0,190px)_1fr] sm:gap-10">
+
+                        <!-- Cover -->
+                        <div class="relative mx-auto w-32 sm:w-full">
+
+                            <div class="absolute -inset-6 rounded-full bg-[#FF5C00]/20 blur-[60px]"></div>
+
+                            <div class="relative aspect-square overflow-hidden rounded-[1.6rem] shadow-[0_0_50px_-12px_rgba(255,92,0,0.45),0_30px_70px_-18px_rgba(0,0,0,0.9)] ring-1 ring-[#FF5C00]/30">
+
+                                <img
+                                    id="featuredCover"
+                                    src="./image/en.jpg"
+                                    alt="Featured music"
+                                    class="h-full w-full object-cover grayscale contrast-105"
+                                >
+
+                                <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,rgba(255,92,0,0)_55%,rgba(255,92,0,0.28)_100%)]"></div>
+
+                                <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Info -->
+                        <div class="min-w-0 pb-5 sm:pb-0">
+
+                            <div class="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
+
+                                <span class="rounded-full border border-[#FF5C00]/30 bg-[#FF5C00]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#FF5C00]">
+                                    sonati
+                                </span>
+
+
+                            </div>
+
+
+                            <h1
+                                class="mt-3 max-w-xl text-center text-2xl font-extrabold leading-[1.12] tracking-tight sm:text-left sm:text-3xl lg:text-4xl lg:leading-[1.05]"
+                            >
+                                Khial
+                                <br class="hidden sm:block">
+                                Khosh
+                            </h1>
+
+
+                            <p class="mt-2 text-center text-sm font-extrabold text-[#FF5C00] sm:text-left sm:text-base lg:text-lg">
+                                Alireza Ghorbani
+                            </p>
+
+
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+      </div>
+      <!-- <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div> -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+
+            <!-- ================= QUICK PANEL ================= -->
+            <div class="rounded-[1.75rem] bg-[#141415] p-5 shadow-sm border border-white/[0.06]">
+
+                <div class="flex items-center justify-between">
+
+                    <h2 class="text-lg font-extrabold">
+                        Your mood
+                    </h2>
+
+                    
+
+</div>
+
+                <!-- Recommended playlist preview -->
+                <div class="mt-4 rounded-[1.5rem] bg-white/[0.04] p-3.5">
+
+                    <div class="flex items-center justify-between">
+
+                        <h3 class="text-sm font-extrabold tracking-tight">
+                            Recommended for your mood
+                        </h3>
+
+                        
+
+                    </div>
+
+                    <div class="mt-3 flex items-center gap-3">
+
+                        <div class="relative -space-x-3">
+                            <span class="inline-block h-9 w-9 rounded-xl ring-2 ring-[#141415] art-orange overflow-hidden">
+                                <img src="./image/m1.jpg" alt="" class="">
+                            </span>
+                            <span class="inline-block h-9 w-9 rounded-xl ring-2 ring-[#141415] art-teal overflow-hidden">
+                                <img src="./image/s.jpg" alt="" class="">
+                            </span>
+                            <span class="inline-block h-9 w-9 rounded-xl ring-2 ring-[#141415] art-amber overflow-hidden">
+                                <img src="./image/mo1.jpg" alt="" class="">
+                            </span>
+                            <span class="inline-block h-9 w-9 rounded-xl ring-2 ring-[#141415] art-amber overflow-hidden">
+                                <img src="./image/h1.jpg" alt="" class="">
+                            </span>
+                        </div>
+
+                        <div class="min-w-0 flex-1">
+                            <p class="truncate text-sm font-bold">Late Night Energy</p>
+                            <p class="truncate text-xs font-semibold text-white/40">12 tracks &bull; 48 min</p>
+                        </div>
+
+                    
+
+                    </div>
+
+                </div>
+
+                <!-- Rotating quote card -->
+                <div class="quote-rotator mt-3 overflow-hidden rounded-[1.5rem] bg-white/[0.04]">
+
+                    <div class="quote-slide">
+
+                        <p class="text-sm font-bold leading-relaxed">
+                            Music is the space between
+                            the notes.
+                        </p>
+
+                        <p class="mt-2 text-sm font-semibold text-white/40">
+                            — Claude Debussy
+                        </p>
+
+                    </div>
+
+                    <div class="quote-slide">
+
+                        <p class="text-sm font-bold leading-relaxed">
+                            One good thing about music: when it hits you,
+                            you feel no pain.
+                        </p>
+
+                        <p class="mt-2 text-sm font-semibold text-white/40">
+                            — Bob Marley
+                        </p>
+
+                    </div>
+
+                    <div class="quote-slide">
+
+                        <p class="text-sm font-bold leading-relaxed">
+                            Music is the moonlight in the gloomy night
+                            of life.
+                        </p>
+
+                        <p class="mt-2 text-sm font-semibold text-white/40">
+                            — Jean Paul
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= CATEGORIES ================= -->
+        <section class="mt-14">
+
+            <div class="flex items-center gap-2.5">
+
+                <span class="h-1.5 w-1.5 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.8)]"></span>
+
+                <p class="text-xs font-bold tracking-[0.25em] text-white/35">
+                    GENRES
+                </p>
+
+            </div>
+
+            <div
+                id="categoryList"
+                class="mt-4 flex flex-wrap items-center gap-1.5 rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-white/[0.02] p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] backdrop-blur-xl"
+            >
+
+                <button
+                    data-category="popular"
+                    class="category-btn rounded-[0.85rem] choice px-5 py-2.5 text-sm font-bold   transition-all duration-300 text-white/40 "
+                >
+                    Popular
+                </button>
+
+                <button
+                    data-category="pop"
+                    class="category-btn rounded-[0.85rem] px-5 py-2.5 text-sm font-semibold text-white/40 transition-all duration-300 hover:bg-[#FF5C00]/10 hover:text-white"
+                >
+                    Pop
+                </button>
+
+                <button
+                    data-category="classic pop"
+                    class="category-btn rounded-[0.85rem] px-5 py-2.5 text-sm font-semibold text-white/40 transition-all duration-300 hover:bg-[#FF5C00]/10 hover:text-white"
+                >
+                        Classic pop
+                </button>
+
+                <button
+                    data-category="sonati"
+                    class="category-btn rounded-[0.85rem] px-5 py-2.5 text-sm font-semibold text-white/40 transition-all duration-300 hover:bg-[#FF5C00]/10 hover:text-white"
+                >
+                    Sonati
+                </button>
+
+                <button
+                    data-category="nostalgic"
+                    class="category-btn rounded-[0.85rem] px-5 py-2.5 text-sm font-semibold text-white/40 transition-all duration-300 hover:bg-[#FF5C00]/10 hover:text-white"
+                >
+                    Nostalgic
+                </button>
+
+                
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= POPULAR ================= -->
+        <section class="mt-14">
+
+            <div class="flex items-end justify-between">
+
+                <div>
+                    <p class="text-sm font-bold text-white/35">
+                        YOUR LIBRARY
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold tracking-tight">
+                        <span class="tit">Popular</span> tracks
+                    </h2>
+                </div>
+
+                <button
+                    class="hidden text-sm font-bold text-white/40 transition hover:text-white sm:block"
+                >
+                    See all
+                </button>
+
+            </div>
+
+            <!-- Playlist -->
+            <div
+                id="playlist"
+                class="mt-7 overflow-hidden rounded-[2rem] bg-[#141415] shadow-sm border border-white/[0.06]"
+            >
+
+                <!-- Song -->
+                
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= ARTISTS ================= -->
+        <section class="mt-14 pb-10">
+
+            <div class="flex items-end justify-between">
+
+                <div>
+                    <p class="text-sm font-bold text-white/35">
+                        MUSIC DIRECTORY
+                    </p>
+
+                    <h2 class="mt-2 text-3xl font-extrabold tracking-tight">
+                        Artists
+                    </h2>
+                </div>
+
+                <span class="text-sm font-bold text-white/40">
+                    5 artists
+                </span>
+
+            </div>
+
+
+            <!-- Artist grid -->
+            <div class="stagger mt-7 grid grid-cols-2 gap-5 md:grid-cols-4 ">
+
+                <!-- Artist: The Weeknd -->
+                <a
+                    href="#artist-mohsen"
+                    class="artist-card group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0e0e10] shadow-xl shadow-black/50"
+                >
+                    <div class="relative aspect-[5/6] overflow-hidden">
+                        <img src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp" alt="The mohsen"
+                             class="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                        <span class="art-grad art-slate absolute inset-0 opacity-60"></span>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
+                        <span class="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#FF5C00]/20 blur-2xl"></span>
+                        <span class="artist-play pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <svg class="h-16 w-16 translate-x-0.5 text-[#FF5C00] transition duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="relative px-4 py-3">
+                        <h3 class="artist-name truncate text-base font-extrabold">Mohsen Yeganeh</h3>
+                        <p class="mt-0.5 text-xs font-semibold text-white/40">5 songs</p>
+                    </div>
+                </a>
+
+
+                
+                <a
+                    href="#artist-alireza"
+                    class="artist-card group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0e0e10] shadow-xl shadow-black/50"
+                >
+                    <div class="relative aspect-[5/6] overflow-hidden">
+                        <img src="./image/a6.webp" alt="alireza Styles"
+                             class="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                        <span class="art-grad art-amber absolute inset-0 opacity-60"></span>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
+                        <span class="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#FF5C00]/20 blur-2xl"></span>
+                        <span class="artist-play pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <svg class="h-16 w-16 translate-x-0.5 text-[#FF5C00] transition duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="relative px-4 py-3">
+                        <h3 class="artist-name truncate text-base font-extrabold">Alireza Ghorbani</h3>
+                        <p class="mt-0.5 text-xs font-semibold text-white/40">6 songs</p>
+                    </div>
+                </a>
+
+
+                
+                <a
+                    href="#artist-shadmehr"
+                    class="artist-card group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0e0e10] shadow-xl shadow-black/50"
+                >
+                    <div class="relative aspect-[5/6] overflow-hidden">
+                        <img src="./image/s5.jpg" alt="shadmehr"
+                             class="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                        <span class="art-grad art-orange absolute inset-0 opacity-60"></span>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
+                        <span class="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#FF5C00]/20 blur-2xl"></span>
+                        <span class="artist-play pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <svg class="h-16 w-16 translate-x-0.5 text-[#FF5C00] transition duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="relative px-4 py-3">
+                        <h3 class="artist-name truncate text-base font-extrabold">shadmehr Aghili</h3>
+                        <p class="mt-0.5 text-xs font-semibold text-white/40">7 songs</p>
+                    </div>
+                </a>
+
+
+            
+                <a
+                    href="#artist-moein"
+                    class="artist-card group relative block overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0e0e10] shadow-xl shadow-black/50"
+                >
+                    <div class="relative aspect-[5/6] overflow-hidden">
+                        <img src="./image/mo1.jpg" alt="moien"
+                             class="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
+                        <span class="art-grad art-teal absolute inset-0 opacity-60"></span>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
+                        <span class="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#FF5C00]/20 blur-2xl"></span>
+                        <span class="artist-play pointer-events-none absolute inset-0 flex items-center justify-center">
+                            <svg class="h-16 w-16 translate-x-0.5 text-[#FF5C00] transition duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                    </div>
+                    <div class="relative px-4 py-3">
+                        <h3 class="artist-name truncate text-base font-extrabold">Moein</h3>
+                        <p class="mt-0.5 text-xs font-semibold text-white/40">5 songs</p>
+                    </div>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= PROFILE CARD ================= -->
+        <section class="mt-14">
+
+            <div class="mx-auto max-w-4xl overflow-hidden rounded-[2.5rem] bg-[#f2f0eb] text-[#111] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
+
+                <div class="grid md:grid-cols-[0.9fr_1.1fr]">
+
+                    <!-- Left: image -->
+                    <div class="relative min-h-[220px] sm:min-h-[260px] md:min-h-[400px]">
+
+                        <img
+                            src="./image/IMG_5043.JPG"
+                            alt="Niloufar"
+                            class="absolute inset-0 h-full w-full object-cover object-center"
+                        >
+
+                        <!-- Dark gradient overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/35"></div>
+
+                        <!-- 01 / 04 -->
+                        <span class="absolute left-5 top-5 rounded-full bg-black/30 px-3.5 py-1 text-xs font-bold tracking-[0.25em] text-white backdrop-blur-sm">
+                            01 / 04
+                        </span>
+
+                        <!-- Available -->
+                        <span class="absolute right-5 top-5 flex items-center gap-2 rounded-full bg-black/30 px-3.5 py-1 text-xs font-bold text-white backdrop-blur-sm">
+                            <span class="relative flex h-2 w-2">
+                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF5C00] opacity-75"></span>
+                                <span class="relative inline-flex h-2 w-2 rounded-full bg-[#FF5C00]"></span>
+                            </span>
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <!-- Right: info -->
+                    <div class="flex flex-col gap-4 p-6 sm:p-8">
+
+                        <!-- Top -->
+                        <div class="flex items-center justify-between gap-4">
+
+                            <p class="text-[11px] font-extrabold uppercase tracking-[0.3em] text-[#111]/50">
+                                Personal profile
+                            </p>
+
+                            <a
+                                href="#"
+                                class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#111]/15 px-3.5 py-1.5 text-xs font-bold text-[#111]/60 transition hover:border-[#111]/35 hover:text-[#111]"
+                            >
+                                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                                Edit
+                            </a>
+
+                        </div>
+
+
+                        <!-- Identity -->
+                        <div>
+
+                            <p class="text-sm font-semibold text-[#111]/50">
+                                Welcome
+                            </p>
+
+                            <h2 class="mt-1 text-4xl font-extrabold tracking-tight sm:text-5xl">
+                                Niloufar
+                            </h2>
+
+                            <p class="mt-1.5 text-sm font-bold text-[#FF5C00]">
+                                @niloufar_dev
+                            </p>
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <p class="max-w-md text-sm font-medium leading-relaxed text-[#111]/70">
+                            Front-End Developer passionate about clean interfaces, smooth interactions, and the tiny details that make a product feel premium.
+                        </p>
+
+
+                        <!-- Socials -->
+                        <div class="flex flex-wrap items-center gap-2">
+
+                            <a
+                                href="https://github.com/niloufar-dev"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 rounded-full border border-[#111]/10 bg-[#111]/[0.05] px-5 py-2.5 text-sm font-bold text-[#111]/80 transition hover:border-[#FF5C00]/50 hover:text-[#111]"
+                            >
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.73-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.4 9.4 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.8-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .27.18.6.69.49A10.25 10.25 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+                                GitHub
+                            </a>
+
+                            <a
+                                href="https://instagram.com/niloufar_dev"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 rounded-full border border-[#111]/10 bg-[#111]/[0.05] px-5 py-2.5 text-sm font-bold text-[#111]/80 transition hover:border-[#FF5C00]/50 hover:text-[#111]"
+                            >
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84ZM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4Zm7.85-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44Z"/></svg>
+                                Instagram
+                            </a>
+
+                            <a
+                                href="https://www.linkedin.com/in/niloufar-mohammadi-a0b2503ab/"
+                                class="inline-flex items-center gap-2 rounded-full border border-[#111]/10 bg-[#111]/[0.05] px-5 py-2.5 text-sm font-bold text-[#111]/80 transition hover:border-[#FF5C00]/50 hover:text-[#111]"
+                            >
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S.02 4.88.02 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.16 8h4.68v15H.16V8Zm7.54 0h4.49v2.05h.06c.63-1.19 2.17-2.45 4.48-2.45 4.79 0 5.67 3.15 5.67 7.25V23h-4.68v-7.3c0-1.74-.03-3.98-2.43-3.98-2.43 0-2.8 1.9-2.8 3.85V23H7.7V8Z"/></svg>
+                                LinkedIn
+                            </a>
+
+                        </div>
+
+
+                        <!-- Bottom -->
+                        <div class="mt-auto flex items-center justify-between gap-4 border-t border-[#111]/10 pt-6">
+
+                            <span class="text-xs font-bold text-[#111]/50">
+                                Member since 2026
+                            </span>
+
+                            <a href="#" class="text-xs font-bold text-[#111]/50 transition hover:text-[#FF5C00]">
+                                Sign out
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    
+    <section id="artist-mohsen" class="artist-page">
+
+        <div class="mx-auto min-h-screen max-w-[1600px] px-5 pb-40 pt-5 sm:px-8 lg:px-10 ">
+
+            <!-- Hero -->
+            <div class="relative overflow-hidden rounded-[2.5rem] border border-white/[0.06] bg-[#141415] ">
+
+                <!-- Ambient background -->
+                <div class="pointer-events-none absolute inset-0">
+                    <span class="art-slate absolute inset-[-20%] opacity-40 blur-3xl animate-glow-drift"></span>
+                    <span class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/70 to-[#09090b]/20"></span>
+                    <span class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#FF5C00]/20 blur-[90px] animate-glow-drift"></span>
+                </div>
+
+                <div class="relative p-7 sm:p-10">
+
+                    <!-- Back -->
+                    <a
+                        href="#"
+                        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                        Back to player
+                    </a>
+
+                    <div class="mt-8 grid items-end gap-8 md:grid-cols-[220px_1fr]">
+
+                        <!-- Large cover -->
+                        <div class="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/60 md:mx-0">
+                            <!-- <span class="art-slate absolute inset-0"></span> -->
+                            <img src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp" class="w-full h-full pointer-events-none absolute inset-0 object-cover text-8xl font-black text-white/20"></img>
+                            <!-- <span class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent"></span> -->
+                        </div>
+
+                        <!-- Info -->
+                        <div>
+                            <span class="text-sm font-bold tracking-widest text-white/40">ARTIST</span>
+
+                            <h1 class="mt-1 bg-gradient-to-r from-white via-white to-[#FF5C00] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+                                Mohsen Yeganeh
+                            </h1>
+
+                            <p class="mt-2 text-sm font-semibold text-white/40">Pop &bull; 5 songs</p>
+
+                            <p class="mt-4 max-w-2xl text-base font-medium leading-relaxed text-white/60">
+                                Iranian singer-songwriter known for his emotional vocals, heartfelt lyrics,
+                                and a distinctive blend of pop melodies with modern, cinematic production.
+                            </p>
+
+                            <div class="mt-8 flex flex-wrap items-center gap-3">
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-3 rounded-full bg-[#FF5C00] px-7 py-4 text-sm font-extrabold text-white transition hover:scale-[1.02] hover:bg-[#e85300] hover:shadow-xl hover:shadow-[#FF5C00]/30"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    Play all
+                                </a>
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                                    Follow
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Songs -->
+            <div class="song-list mt-12 ">
+
+                <div class="flex items-end justify-between">
+
+                    <div>
+                        <p class="text-sm font-bold text-white/35">TRACKLIST</p>
+                        <h2 class="mt-2 text-2xl font-extrabold tracking-tight">Songs</h2>
+                    </div>
+
+                    <span class="text-sm font-bold text-white/40">5 tracks</span>
+
+                </div>
+
+
+                <div class="mt-6 overflow-hidden rounded-[2rem] border border-white/[0.06] bg-[#141415] artmohsen">
+
+                    
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ARTIST PAGE : HARRY STYLES ================= -->
+    <section id="artist-alireza" class="artist-page">
+
+        <div class="mx-auto min-h-screen max-w-[1600px] px-5 pb-40 pt-5 sm:px-8 lg:px-10">
+
+            <div class="relative overflow-hidden rounded-[2.5rem] border border-white/[0.06] bg-[#141415]">
+
+                <div class="pointer-events-none absolute inset-0">
+                    <span class="art-amber absolute inset-[-20%] opacity-40 blur-3xl animate-glow-drift"></span>
+                    <span class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/70 to-[#09090b]/20"></span>
+                    <span class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#FF5C00]/20 blur-[90px] animate-glow-drift"></span>
+                </div>
+
+                <div class="relative p-7 sm:p-10">
+
+                    <a
+                        href="#"
+                        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                        Back to player
+                    </a>
+
+                    <div class="mt-8 grid items-end gap-8 md:grid-cols-[220px_1fr]">
+                    <div class="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/60 md:mx-0">
+                            <!-- <span class="art-slate absolute inset-0"></span> -->
+                            <img src="./image/a6.webp" class="w-full h-full pointer-events-none absolute inset-0 object-cover text-8xl font-black text-white/20"></img>
+                            <!-- <span class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent"></span> -->
+                        </div>
+
+                        <div>
+                            <span class="text-sm font-bold tracking-widest text-white/40">ARTIST</span>
+
+                            <h1 class="mt-1 bg-gradient-to-r from-white via-white to-[#FF5C00] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+                                Alireza Ghorbani
+                            </h1>
+
+                            <p class="mt-2 text-sm font-semibold text-white/40">Sonati &bull; 6 songs</p>
+
+                            <p class="mt-4 max-w-2xl text-base font-medium leading-relaxed text-white/60">
+                                Iranian vocalist celebrated for his powerful, emotional voice and masterful interpretation of Persian classical music, blending timeless traditions with a modern, cinematic atmosphere.
+
+                            </p>
+
+                            <div class="mt-8 flex flex-wrap items-center gap-3">
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-3 rounded-full bg-[#FF5C00] px-7 py-4 text-sm font-extrabold text-white transition hover:scale-[1.02] hover:bg-[#e85300] hover:shadow-xl hover:shadow-[#FF5C00]/30"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    Play all
+                                </a>
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                                    Follow
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="song-list mt-12">
+
+                <div class="flex items-end justify-between">
+
+                    <div>
+                        <p class="text-sm font-bold text-white/35">TRACKLIST</p>
+                        <h2 class="mt-2 text-2xl font-extrabold tracking-tight">Songs</h2>
+                    </div>
+
+                    <span class="text-sm font-bold text-white/40">6 tracks</span>
+
+                </div>
+
+
+                <div class="mt-6 overflow-hidden rounded-[2rem] border border-white/[0.06] bg-[#141415] artalireza">
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    
+    <section id="artist-shadmehr" class="artist-page">
+
+        <div class="mx-auto min-h-screen max-w-[1600px] px-5 pb-40 pt-5 sm:px-8 lg:px-10">
+
+            <div class="relative overflow-hidden rounded-[2.5rem] border border-white/[0.06] bg-[#141415]">
+
+                <div class="pointer-events-none absolute inset-0">
+                    <span class="art-orange absolute inset-[-20%] opacity-40 blur-3xl animate-glow-drift"></span>
+                    <span class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/70 to-[#09090b]/20"></span>
+                    <span class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#FF5C00]/20 blur-[90px] animate-glow-drift"></span>
+                </div>
+
+                <div class="relative p-7 sm:p-10">
+
+                    <a
+                        href="#"
+                        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                        Back to player
+                    </a>
+
+                    <div class="mt-8 grid items-end gap-8 md:grid-cols-[220px_1fr]">
+
+                        <div class="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/60 md:mx-0">
+                            <!-- <span class="art-slate absolute inset-0"></span> -->
+                            <img src="./image/s5.jpg" class="w-full h-full pointer-events-none absolute inset-0 object-cover text-8xl font-black text-white/20"></img>
+                            <!-- <span class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent"></span> -->
+                        </div>
+
+                        <div>
+                            <span class="text-sm font-bold tracking-widest text-white/40">ARTIST</span>
+
+                            <h1 class="mt-1 bg-gradient-to-r from-white via-white to-[#FF5C00] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+                                Shadmehr  Aghili
+                            </h1>
+
+                            <p class="mt-2 text-sm font-semibold text-white/40">pop &bull; 7 songs</p>
+
+                            <p class="mt-4 max-w-2xl text-base font-medium leading-relaxed text-white/60">
+                                Iranian pop icon known for his soulful voice, heartfelt songwriting, and timeless melodies that blend emotional storytelling with a modern pop sound.
+
+                            </p>
+
+                            <div class="mt-8 flex flex-wrap items-center gap-3">
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-3 rounded-full bg-[#FF5C00] px-7 py-4 text-sm font-extrabold text-white transition hover:scale-[1.02] hover:bg-[#e85300] hover:shadow-xl hover:shadow-[#FF5C00]/30"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    Play all
+                                </a>
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                                    Follow
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="song-list mt-12">
+
+                <div class="flex items-end justify-between">
+
+                    <div>
+                        <p class="text-sm font-bold text-white/35">TRACKLIST</p>
+                        <h2 class="mt-2 text-2xl font-extrabold tracking-tight">Songs</h2>
+                    </div>
+
+                    <span class="text-sm font-bold text-white/40">7 tracks</span>
+
+                </div>
+
+
+                <div class="mt-6 overflow-hidden rounded-[2rem] border border-white/[0.06] bg-[#141415] artshadmehr">
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+    <section id="artist-moein" class="artist-page">
+
+        <div class="mx-auto min-h-screen max-w-[1600px] px-5 pb-40 pt-5 sm:px-8 lg:px-10">
+
+            <div class="relative overflow-hidden rounded-[2.5rem] border border-white/[0.06] bg-[#141415]">
+
+                <div class="pointer-events-none absolute inset-0">
+                    <span class="art-teal absolute inset-[-20%] opacity-40 blur-3xl animate-glow-drift"></span>
+                    <span class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/70 to-[#09090b]/20"></span>
+                    <span class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#FF5C00]/20 blur-[90px] animate-glow-drift"></span>
+                </div>
+
+                <div class="relative p-7 sm:p-10">
+
+                    <a
+                        href="#"
+                        class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                        Back to player
+                    </a>
+
+                    <div class="mt-8 grid items-end gap-8 md:grid-cols-[220px_1fr]">
+
+                        <div class="relative mx-auto aspect-square w-full max-w-[220px] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/60 md:mx-0">
+                            <!-- <span class="art-slate absolute inset-0"></span> -->
+                            <img src="./image/mo1.jpg" class="w-full h-full pointer-events-none absolute inset-0 object-cover text-8xl font-black text-white/20"></img>
+                            <!-- <span class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent"></span> -->
+                        </div>
+
+                        <div>
+                            <span class="text-sm font-bold tracking-widest text-white/40">ARTIST</span>
+
+                            <h1 class="mt-1 bg-gradient-to-r from-white via-white to-[#FF5C00] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-6xl">
+                                Moein
+                            </h1>
+
+                            <p class="mt-2 text-sm font-semibold text-white/40">Classic Persian Pop&bull; 5 songs</p>
+
+                            <p class="mt-4 max-w-2xl text-base font-medium leading-relaxed text-white/60">
+                                Iranian pop icon known for his deeply emotional voice, timeless romantic songs, and a distinctive style that has made him one of the most beloved voices in Persian music.
+
+                            </p>
+
+                            <div class="mt-8 flex flex-wrap items-center gap-3">
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-3 rounded-full bg-[#FF5C00] px-7 py-4 text-sm font-extrabold text-white transition hover:scale-[1.02] hover:bg-[#e85300] hover:shadow-xl hover:shadow-[#FF5C00]/30"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                    Play all
+                                </a>
+
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-sm font-bold text-white/70 transition hover:bg-white/10 hover:text-white"
+                                >
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                                    Follow
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="song-list mt-12">
+
+                <div class="flex items-end justify-between">
+
+                    <div>
+                        <p class="text-sm font-bold text-white/35">TRACKLIST</p>
+                        <h2 class="mt-2 text-2xl font-extrabold tracking-tight">Songs</h2>
+                    </div>
+
+                    <span class="text-sm font-bold text-white/40">5 tracks</span>
+
+                </div>
+
+
+                <div class="mt-6 overflow-hidden rounded-[2rem] border border-white/[0.06] bg-[#141415] artmoein">
+
+                
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    
+
+
+    <!-- FAVORITES PAGE -->
+    <section id="favoritesPage" class="favorites-page">
+
+        <div class="mx-auto min-h-screen max-w-[1600px] px-5 pb-64 pt-5 sm:px-8 md:pb-40 lg:px-10">
+
+            
+            <header class="flex items-center justify-between">
+
+                
+                <a href="#" class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-full bg-[#FF5C00] text-white">
+                        <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path d="M9 18V5l10-2v13"/>
+                            <circle cx="6" cy="18" r="3"/>
+                            <circle cx="16" cy="16" r="3"/>
+                        </svg>
+                    </div>
+
+                    <span class="text-xl font-extrabold tracking-tight">
+                        NOIR
+                    </span>
+                </a>
+
+
+                
+                <nav class="hidden items-center gap-7 md:flex">
+
+                    <a
+                        href="#"
+                        class="flex items-center gap-2 text-sm font-semibold text-white/40 transition hover:text-[#FF5C00]"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg>
+                        Home
+                    </a>
+
+                <a
+                    href="#favoritesPage"
+                    class="group relative flex items-center gap-2 text-sm font-bold text-white"
+                >
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                    Favorites
+                    <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-[#FF5C00] shadow-[0_0_8px_rgba(255,92,0,0.9)]"></span>
+                </a>
+
+                
+
+                </nav>
+
+
+            
+                <nav class="flex items-center gap-2 md:hidden ">
+
+                    <a
+                        href="#"
+                        class="flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-4 py-2 text-xs font-bold text-white/70 transition duration-300 active:scale-95 hover:border-[#FF5C00]/40 hover:text-[#FF5C00]"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+                        Home
+                    </a>
+
+                    <a
+                        href="#favoritesPage"
+                        class="mobile-nav-fav flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.04] px-4 py-2 text-xs font-bold text-white/70 transition duration-300 active:scale-95 hover:border-[#FF5C00]/40 hover:text-[#FF5C00]"
+                    >
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.7c0 5.5-8.8 10.3-8.8 10.3S3.2 14.2 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
+                        Favorites
+                    </a>
+
+                </nav>
+
+
+                
+                <div class="hidden items-center gap-3 rounded-full bg-white/[0.07] px-5 py-3 shadow-sm lg:flex">
+
+                    <svg
+                        class="h-5 w-5 text-white/40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-4-4"/>
+                    </svg>
+
+                    <input
+                        type="text"
+                        placeholder="Search music..."
+                        class="w-48 bg-transparent text-sm font-semibold outline-none placeholder:text-white/35"
+                    >
+
+                </div>
+
+            </header>
+
+
+            
+            <div class="relative mt-12">
+
+                <div class="pointer-events-none absolute -right-10 -top-20 h-72 w-72 rounded-full bg-[#FF5C00]/10 blur-[100px]"></div>
+
+                <div class="relative flex flex-wrap items-end justify-between gap-8">
+
+                    
+                    <div>
+
+                        <p class="flex items-center gap-3 text-sm font-bold text-white/35">
+                            YOUR LIBRARY
+                            <span class="inline-flex items-end gap-[2px]">
+                                <span class="h-3 w-[3px] rounded-full bg-[#FF5C00] eq-bar-1"></span>
+                                <span class="h-4 w-[3px] rounded-full bg-[#FF5C00] eq-bar-2"></span>
+                                <span class="h-2.5 w-[3px] rounded-full bg-[#FF5C00] eq-bar-3"></span>
+                            </span>
+                        </p>
+
+                        <h1 class="mt-3 text-4xl font-extrabold tracking-tight sm:text-6xl">
+                            Your Favorites
+                        </h1>
+
+                        <p class="mt-4 text-base font-semibold text-white/40">
+                            Songs you love, all in one place.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Stats card -->
+                    <div class="flex items-center gap-5 rounded-[2rem] border border-white/[0.06] bg-[#141415] p-6 shadow-sm">
+
+                        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FF5C00]/12 text-[#FF5C00]">
+                            <svg class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.7-4.35-8.9-7.4C1.15 10.9 2.3 7.4 5.4 6.6c1.85-.48 3.85.05 6.6 2.75 2.75-2.7 4.75-3.23 6.6-2.75 3.1.8 4.25 4.3 2.3 7A19.5 19.5 0 0 1 12 21Z"/></svg>
+                        </div>
+
+                        <div>
+                            <p class="text-3xl font-extrabold tracking-tight">03</p>
+                            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-white/40">Saved tracks</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FAVORITE TRACKS ================= -->
+            <div class="song-list mt-10 overflow-hidden rounded-[2rem] border border-white/[0.06] bg-[#141415] ff">
+
+                
+
+            
+            <div
+                id="favoritesEmptyState"
+                class="mx-auto mt-20 max-w-md text-center"
+                hidden
+            >
+
+                <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full border border-white/[0.06] bg-[#141415]">
+                    <svg class="h-10 w-10 text-[#FF5C00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-6.7-4.35-8.9-7.4C1.15 10.9 2.3 7.4 5.4 6.6c1.85-.48 3.85.05 6.6 2.75 2.75-2.7 4.75-3.23 6.6-2.75 3.1.8 4.25 4.3 2.3 7A19.5 19.5 0 0 1 12 21Z"/></svg>
+                </div>
+
+                <h2 class="mt-8 text-2xl font-extrabold tracking-tight">
+                    No favorites yet
+                </h2>
+
+                <p class="mt-3 text-base font-medium text-white/40">
+                    Save the songs you love and they&rsquo;ll appear here.
+                </p>
+
+                <a href="#" class="mt-8 inline-flex items-center gap-2 rounded-full bg-[#FF5C00] px-7 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-[#FF5C00]/30 transition duration-300 hover:scale-[1.03] hover:bg-[#e85300]">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 9 8h-3v9h-5v-6h-2v6H6v-9H3z"/></svg>
+                    Discover Music
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <div
+        id="musicPlayer"
+        class="fixed bottom-5 left-4 right-4 z-50 mx-auto max-w-[1450px] md:bottom-4 "
+    >
+
+        <div
+            class="rounded-[2rem] bg-[#111]/95 py-3 px-4 text-white shadow-2xl backdrop-blur-xl sm:p-5"
+        >
+
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+
+                
+                <div class="flex min-w-0 items-center gap-3 sm:w-[240px] sm:flex-none">
+
+                    <img
+                        id="playerCover"
+                        src="./image/ab6761860000019439a4ed113c1859bf7d323d37.webp"
+                        alt=""
+                        class="h-12 w-12 shrink-0 rounded-xl object-cover sm:h-14 sm:w-14 sm:rounded-2xl"
+                    >
+
+                    <div class="min-w-0">
+
+                        <h3
+                            id="playerTitle"
+                            class="truncate text-sm font-extrabold"
+                        >
+                            behet ghol midam
+                        </h3>
+
+                        <p
+                            id="playerArtist"
+                            class="mt-1 truncate text-sm font-semibold text-white/40"
+                        >
+                            mohsen yeganeh
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Controls -->
+                <div class="flex flex-1 flex-col gap-1">
+
+                    <div class="flex items-center justify-center gap-2 sm:gap-4">
+
+                        
+                        <button
+                            id="prevBtn"
+                            class="flex h-10 w-10 items-center justify-center text-white/60 transition hover:text-black"
+                        >
+                            <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path d="M6 5h2v14H6zm3 7 10-7v14z"/>
+                            </svg>
+                        </button>
+
+
+                        <button
+                            id="playBtn"
+                            class="flex h-12 w-12 items-center justify-center rounded-full bg-[#FF5C00] text-white transition hover:scale-105"
+                        >
+
+                            <svg
+                                id="playIcon"
+                                class="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+
+                        </button>
+
+
+                        <button
+                            id="nextBtn"
+                            class="flex h-10 w-10 items-center justify-center text-white/60 transition hover:text-black"
+                        >
+                            <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                            >
+                                <path d="M16 5h2v14h-2zm-9 0 10 7-10 7z"/>
+                            </svg>
+                        </button>
+
+
+                        <button
+                            id="repeatBtn"
+                            data-reap="off"
+                            class="hidden h-9 w-9 items-center justify-center rounded-full text-white/40 transition-all duration-300 hover:text-[#FF5C00] sm:flex"
+                        >
+                            ↻
+                        </button>
+
+                    </div>
+
+
+                    <!-- Progress -->
+                    <div class="flex items-center gap-3">
+
+                        <span
+                            id="currentTime"
+                            class="text-xs font-bold text-white/40"
+                        >
+                            0:00
+                        </span>
+
+
+                        <div
+                            id="progressContainer"
+                            class="h-1.5 flex-1 cursor-pointer overflow-hidden rounded-full bg-white/10"
+                        >
+
+                            <div
+                                id="progressBar"
+                                class="h-full w-0 rounded-full bg-gradient-to-r from-[#FF5C00] to-[#ffb36b] shadow-[0_0_12px_rgba(255,92,0,0.6)] transition-all"
+                            ></div>
+
+                        </div>
+
+
+                        <span
+                            id="duration"
+                            class="text-xs font-bold text-white/40"
+                        >
+                            3:20
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Volume -->
+                <div class="hidden items-center gap-3 lg:flex">
+
+                    <button
+                        id="muteBtn"
+                        class="text-white/50 transition hover:text-black"
+                    >
+                        <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path d="M11 5 6 9H3v6h3l5 4z"/>
+                            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+                            <path d="M18 6a9 9 0 0 1 0 12"/>
+                        </svg>
+                    </button>
+
+
+                    <div
+                        id="volumeContainer"
+                        class="h-1.5 w-24 cursor-pointer overflow-hidden rounded-full bg-white/10"
+                    >
+
+                        <div
+                            id="volumeBar"
+                            class="h-full w-3/4 rounded-full bg-[#FF5C00] shadow-[0_0_10px_rgba(255,92,0,0.5)]"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <button data-fav="off"
+        class="favorite-btn hidden h-10 w-10 items-center justify-center rounded-full text-white/30 hover:text-white sm:flex "
+    >
+
+<audio id="track" src=""></audio>
+
+
+<!-- ///////////////////////////// -->
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+    <script src="./script.js"></script>
+    
+
+</body>
+</html>
