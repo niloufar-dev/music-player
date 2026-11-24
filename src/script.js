@@ -359,7 +359,6 @@ let songs=[
 
 })
  }
-//  buildsong(songs)
 
 playBtn.addEventListener('click',()=>{
     
@@ -428,9 +427,19 @@ function pausesong(s){
     s.setAttribute('d', 'M8 5v14l11-7z')
 }
 
+function updateActiveRow(){
+    const activeId = songs[songindex].id
+
+    document.querySelectorAll('.row').forEach((row) => {
+        row.classList.toggle('row-active', Number(row.dataset.songId) === activeId)
+    })
+}
+
 track.addEventListener('play', () => {
 
     playsong(playPath)
+    document.body.classList.add('is-playing')
+    updateActiveRow()
 
     const allPaths = document.querySelectorAll('.play-track-btn path')
 
@@ -477,6 +486,7 @@ track.addEventListener('play', () => {
 track.addEventListener('pause', () => {
 
     pausesong(playPath)
+    document.body.classList.remove('is-playing')
 
     const currentSongs = document.querySelectorAll(
         `[data-song-id="${songs[songindex].id}"]`

@@ -134,11 +134,28 @@ main:has(~ .artist-page:target) { display: none; }
 }
 
 /* Now playing state */
-.row-active { background: rgba(255, 92, 0, 0.07); }
+.row-active { background: rgba(255, 92, 0, 0.07); box-shadow: inset 2px 0 0 #FF5C00; }
 .row-active:hover { background: rgba(255, 92, 0, 0.10); }
-.row-active .row-title { color: #ff6a1f; }
+.row-active .row-title,
+.row-active h3 { color: #ff6a1f; }
 .row-active .row-num { opacity: 0; }
 .row-active .row-eq { display: flex; }
+
+/* Playing indicator — animates only while audio is playing */
+.row-eq > span {
+    display: block;
+    height: 100%;
+    transform-origin: bottom;
+    animation: noir-eq 0.9s ease-in-out infinite alternate;
+}
+.row-eq > span:nth-child(2) { animation-duration: 0.75s; animation-delay: 0.15s; }
+.row-eq > span:nth-child(3) { animation-duration: 1.05s; animation-delay: 0.3s; }
+body:not(.is-playing) .row-eq > span { animation-play-state: paused; }
+
+@keyframes noir-eq {
+    from { transform: scaleY(0.35); }
+    to   { transform: scaleY(1); }
+}
 
 /* Staggered song-list appearance */
 .song-list .row {
